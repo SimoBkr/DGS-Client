@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {DgsAutoConfiguration.class,ShowsDataFetcher.class})
 class ShowsDataFetcherTest {
@@ -26,7 +26,11 @@ class ShowsDataFetcherTest {
                 "    }\n" +
                 "}";
 
-        List<String> titles = dgsQueryExecutor.executeAndExtractJsonPath(query,"data.shows.title");
-        Assertions.assertThat(titles).containsExactly("Ozark");
+        List<String> titles = dgsQueryExecutor.executeAndExtractJsonPath(query,"data.shows[*].title");
+
+          assertThat(titles).contains("Ozark");
+
+//        List<String> titles = dgsQueryExecutor.exe
+//        Assertions.assertThat(titles).containsExactly("Ozark");
     }
 }
